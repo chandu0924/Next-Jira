@@ -1,0 +1,39 @@
+.home-container {
+  text-align: center;
+  margin-top: 100px;
+}
+
+.home-title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #222;
+}
+
+.home-auth-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.home-button {
+  background-color: #0070f3;
+  padding: 0.6rem 1rem;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.home-button:hover {
+  background-color: #005bb5;
+}
+
+.logout {
+  background-color: #e63946;
+}
+
+.logout:hover {
+  background-color: #d62828;
+}
