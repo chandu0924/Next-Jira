@@ -1,39 +1,25 @@
-.home-container {
-  text-align: center;
-  margin-top: 100px;
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+/* In a global CSS file or page container CSS */
 
-.home-title {
-  font-size: 2rem;
-  margin-bottom: 2rem;
-  color: #222;
-}
-
-.home-auth-buttons {
+.page-container {
   display: flex;
-  justify-content: center;
-  gap: 1rem;
+  flex-direction: column;
+  min-height: 100vh; /* full viewport height */
 }
 
-.home-button {
-  background-color: #0070f3;
-  padding: 0.6rem 1rem;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.2s;
+.page-body {
+  flex: 1; /* main content grows to fill */
 }
 
-.home-button:hover {
-  background-color: #005bb5;
-}
-
-.logout {
-  background-color: #e63946;
-}
-
-.logout:hover {
-  background-color: #d62828;
+/* Footer styling */
+.footer {
+  background-color: #1f2937;
+  color: #f3f4f6;
+  padding: 1.5rem 2rem;
+  text-align: center;
+  font-size: 0.9rem;
 }

@@ -1,0 +1,49 @@
+.sidebar {
+    width: 220px;
+    background-color: #2e2e3a;
+    color: white;
+    height: 100vh;
+    padding: 1rem;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+  }
+  
+  .menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .menu li {
+    margin-bottom: 1rem;
+  }
+  
+  .menuButton {
+    background: none;
+    border: none;
+    color: #a3c4f3;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .submenu {
+    list-style: none;
+    margin-top: 0.5rem;
+    margin-left: 1rem;
+    padding: 0;
+  }
+  
+  .submenu li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .menu li a{
+    color: #a3c4f3;
+    text-decoration: none;
+  }
+  
+  .menu li a:hover {
+    text-decoration: underline;
+  }
+  

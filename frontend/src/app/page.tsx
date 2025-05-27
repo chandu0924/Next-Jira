@@ -3,39 +3,45 @@
 import { useEffect, useState } from "react"
 import { Cookies } from "react-cookie"
 import { useRouter } from "next/navigation"
-import "./globals.css"
+
+import Navbar from "../components/Navbar/page.tsx"
+import LeftSidebar from "../components/Leftsidebar/page.tsx"
+import RightSidebar from "../components/Rightsidebar/page.tsx"
+import Dashboard from "../components/Dashboard/page.tsx"
+import Footer from "../components/Footer/page.tsx"
 
 const cookies = new Cookies()
 
-export default function HomePage() {
-  const [token, setToken] = useState<string | null>(null)
+export default function MainPage() {
   const router = useRouter()
+  const [token, setToken] = useState<string | null>(null)
 
   useEffect(() => {
-    const t = cookies.get("token")
-    if (!t) {
-      router.push("/login") // 🚀 Redirect if no token
+    const token = cookies.get("token")
+    if (!token) {
+      router.push("/login")
     } else {
-      setToken(t)
+      setToken(token)
     }
   }, [router])
 
-  const handleLogout = () => {
-    cookies.remove("token", { path: "/" })
-    setToken(null)
-    router.push("/login")
+  if (!token) {
+    return null // or loading spinner
   }
 
   return (
-    <div className="home-container">
-      <h1 className="home-title">Welcome to Your JIRA Clone</h1>
+    <div className="page-container">
+      <Navbar />
 
-      {token && (
-        <div className="home-logged-in">
-          <p>You are logged in ✅</p>
-          <button onClick={handleLogout} className="home-button logout">Logout</button>
-        </div>
-      )}
+      <div className="page-body" style={{ display: "flex" }}>
+        <LeftSidebar />
+        <main style={{ flex: 1 }}>
+          <Dashboard />
+        </main>
+        <RightSidebar />
+      </div>
+
+      <Footer className="footer" />
     </div>
   )
 }
