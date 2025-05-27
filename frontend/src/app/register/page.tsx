@@ -65,7 +65,7 @@ export default function RegisterPage() {
 
       <p className={styles["register-login-text"]}>
         Already have an account?{" "}
-        <Link href="/Login" className={styles["register-login-link"]}>Login here</Link>
+        <Link href="/login" className={styles["register-login-link"]}>Login here</Link>
       </p>
     </div>
   )
