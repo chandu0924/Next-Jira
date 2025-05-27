@@ -10,9 +10,16 @@ const requireSignIn = passport.authenticate('local', {
 });
 
 module.exports = function (app) {
+  console.log("📡 Mounting router...");
+
+    // TEST ROUTE
+    app.post("/api/test", (req, res) => {
+      console.log("🎯 /api/test hit!");
+      res.json({ message: "Test route worked!" });
+    });
 
   // Hello endpoint
-  app.get('/api/', function (req, res) {
+  app.get('/api', function (req, res) {
     res.send('Express Server with JWT Authentication');
   });
 
@@ -28,4 +35,5 @@ module.exports = function (app) {
 
   // Register user
   app.post('/api/register', Authentication.signup);
+  
 };

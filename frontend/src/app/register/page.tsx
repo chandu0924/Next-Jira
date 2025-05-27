@@ -17,9 +17,8 @@ export default function RegisterPage() {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const url = `${process.env.NEXT_PUBLIC_API_URL}/api/register`
+      const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/register`
       const response = await axios.post(url, { email, password })
-
       const { token } = response.data
       cookies.set("token", token, { path: "/" })
       setSuccess("Registration successful! You can now log in.")

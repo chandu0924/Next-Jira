@@ -1,48 +1,40 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt-nodejs');
+const bcrypt = require('bcryptjs'); // use bcryptjs for async/await support
 
 const { Schema } = mongoose;
-
 
 // creating user schema
 const userSchema = new Schema({
   email: {
     type: String,
     unique: true,
-    lowercase: true
+    lowercase: true,
   },
-  password: String
+  password: String,
 });
 
-// encrypt password before saving a model
-userSchema.pre('save', function (next) {
+// Encrypt password before saving a model
+userSchema.pre('save', async function (next) {
   const user = this;
-  // generating hashed password
-  bcrypt.genSalt(10, function (err, salt) {
-    if (err) {
-      return next(err);
-    }
-    bcrypt.hash(user.password, salt, null, function (err, hash) {
-      if (err) {
-        return next(err);
-      }
+  
+  if (!user.isModified('password')) return next(); // Only hash password if it's modified
 
-      user.password = hash;
-
-      // proceed to saving the model
-      next();
-    });
-  });
+  try {
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(user.password, salt);
+    next();
+  } catch (err) {
+    next(err);
+  }
 });
 
-// comparing saved hashed password and provided password during signing in
-userSchema.methods.comparePasswords = function (password, callback) {
-  bcrypt.compare(password, this.password, function (err, isMatch) {
-    if (err) {
-      return callback(err);
-    }
-    callback(null, isMatch);
-  });
+// Comparing saved hashed password and provided password during sign-in
+userSchema.methods.comparePasswords = async function (password) {
+  try {
+    return await bcrypt.compare(password, this.password);
+  } catch (err) {
+    throw err;
+  }
 };
 
 const User = mongoose.model('user', userSchema);

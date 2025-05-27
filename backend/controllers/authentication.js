@@ -1,5 +1,6 @@
 const jwt = require('jwt-simple');
 const User = require('../models/User');
+const bcrypt = require('bcryptjs');
 // const { secret } = require('../config');
 const secret = "jksjkdfdnssdjnvjos65";
 
@@ -8,37 +9,54 @@ function tokenForUser(user) {
   return jwt.encode({ sub: user.id, iat: timestamp }, secret);
 }
 
-exports.signin = function (req, res) {
-  res.send({ token: tokenForUser(req.user) });
-};
 
-exports.signup = function (req, res, next) {
-  const email = req.body.email;
-  const password = req.body.password;
+exports.signup = async function (req, res, next) {
+  const { email, password } = req.body;
 
   if (!email || !password) {
     return res.status(422).send({ error: 'Email and password must be provided' });
   }
 
-  User.findOne({ email: email }, function (err, existingUser) {
-    if (err) {
-      return next(err);
-    }
+  try {
+    console.log("email:", email, "password:", password);
+
+    const existingUser = await User.findOne({ email });
 
     if (existingUser) {
       return res.status(422).send({ error: 'Email is already in use...' });
     }
 
-    const user = new User({
-      email: email,
-      password: password
-    });
+    const user = new User({ email, password });
+    await user.save();
 
-    user.save(function (err) {
-      if (err) {
-        return next(err);
-      }
-      res.json({ token: tokenForUser(user) });
-    });
-  });
+    res.json({ token: tokenForUser(user) });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.signin = async function (req, res, next) {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(422).send({ error: 'Email and password must be provided' });
+  }
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(401).send({ message: 'Invalid email or password' });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(401).send({ message: 'Invalid email or password' });
+    }
+
+    res.send({ token: tokenForUser(user) });
+  } catch (err) {
+    next(err);
+  }
 };
