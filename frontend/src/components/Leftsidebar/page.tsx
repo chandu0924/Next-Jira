@@ -24,7 +24,7 @@ export default function LeftSidebar() {
               </ul>
             )}
           </li>
-          <li><Link href="/projects">Projects</Link></li>
+          <li><Link href="/main/project">Projects</Link></li>
           <li><Link href="/main/sprints">Sprints</Link></li>
           <li><Link href="/tasks">Current Tasks</Link></li>
           <li><Link href="/resources">Resources</Link></li>
