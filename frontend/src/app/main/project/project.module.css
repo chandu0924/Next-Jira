@@ -115,5 +115,81 @@
   .createButton:hover {
     background-color: #0059c1;
   }
+  .projectList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+  
+  .projectCard {
+    background-color: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .projectCard:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  }
+  
+  .projectTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #1f2937;
+  }
+  
+  .projectDescription {
+    color: #4b5563;
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .projectMeta p {
+    margin: 0.25rem 0;
+    font-size: 0.875rem;
+    color: #374151;
+  }
+  
+  .projectActions {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+  
+  .projectEditButton,
+  .projectDeleteButton {
+    flex: 1;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .projectEditButton {
+    background-color: #3b82f6;
+    color: white;
+  }
+  
+  .projectEditButton:hover {
+    background-color: #2563eb;
+  }
+  
+  .projectDeleteButton {
+    background-color: #ef4444;
+    color: white;
+  }
+  
+  .projectDeleteButton:hover {
+    background-color: #dc2626;
+  }
+  
   
   

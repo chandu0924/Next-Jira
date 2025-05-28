@@ -45,23 +45,28 @@ export default function ProjectListPage() {
 
       <div className={styles.projectList}>
         {projects.map((proj) => (
-          <div key={proj._id} className={styles.projectCard}>
-            <h3>{proj.title}</h3>
-            <p>{proj.description}</p>
-            <p>Status: {proj.status}</p>
-            <p>Priority: {proj.priority}</p>
-            <p>Assignee: {proj.assignee}</p>
-            <p>Assigned By: {proj.assignedBy}</p>
-            <p>Tags: {proj.tags.join(", ")}</p>
-            <button onClick={() => router.push(`/main/project/edit/${proj._id}`)} className={styles.projectEditButton}>
-              Edit
-            </button>
-            <button onClick={() => handleDelete(proj._id)} className={styles.projectDeleteButton}>
-              Delete
-            </button>
-          </div>
+            <div key={proj._id} className={styles.projectCard}>
+            <h3 className={styles.projectTitle}>{proj.title}</h3>
+            <p className={styles.projectDescription}>{proj.description}</p>
+            <div className={styles.projectMeta}>
+                <p><strong>Status:</strong> {proj.status}</p>
+                <p><strong>Priority:</strong> {proj.priority}</p>
+                <p><strong>Assignee:</strong> {proj.assignee}</p>
+                <p><strong>Assigned By:</strong> {proj.assignedBy}</p>
+                <p><strong>Tags:</strong> {proj.tags.join(", ")}</p>
+            </div>
+            <div className={styles.projectActions}>
+                <button onClick={() => router.push(`/main/project/edit/${proj._id}`)} className={styles.projectEditButton}>
+                ✏️ Edit
+                </button>
+                <button onClick={() => handleDelete(proj._id)} className={styles.projectDeleteButton}>
+                🗑️ Delete
+                </button>
+            </div>
+            </div>
         ))}
-      </div>
+        </div>
+
     </div>
   )
 }
