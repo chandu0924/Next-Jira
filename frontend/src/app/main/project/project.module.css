@@ -1,195 +1,140 @@
-.projectContainer {
-    display: flex;
-    gap: 2rem;
-    padding: 2rem;
-    flex-wrap: wrap;
-  }
-  
-  .projectListSection {
-    flex: 1;
-    min-width: 300px;
-  }
-  
-  .projectFormSection {
-    flex: 1;
-    min-width: 300px;
-  }
-  
-  .projectHeading {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-    color: #333;
-  }
-  
-  .projectForm {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-  
-  .projectInput,
-  .projectTextarea,
-  .projectSelect {
-    padding: 0.6rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-  }
-  
-  .projectButton {
-    background-color: #0070f3;
-    color: white;
-    padding: 0.7rem;
-    font-size: 1rem;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-  
-  .projectButton:hover {
-    background-color: #005ad1;
-  }
-  
-  .projectList {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .projectCard {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    padding: 1rem;
-    border-radius: 8px;
-  }
-  
-  .projectCard h3 {
-    margin-top: 0;
-  }
-  
-  .projectEditButton,
-  .projectDeleteButton {
-    padding: 0.5rem 0.75rem;
-    margin-right: 0.5rem;
-    font-size: 0.9rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .projectEditButton {
-    background-color: #ffc107;
-    color: black;
-  }
-  
-  .projectDeleteButton {
-    background-color: #dc3545;
-    color: white;
-  }
-  
-  .divider {
-    margin: 2rem 0;
-    border: none;
-    border-top: 1px solid #ccc;
-  }
-  .projectListContainer {
-    padding: 1rem;
-  }
-  
-  .projectListHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .createButton {
-    padding: 0.5rem 1rem;
-    background-color: #0070f3;
-    color: white;
-    border: none;
-    border-radius: 0.4rem;
-    cursor: pointer;
-  }
-  
-  .createButton:hover {
-    background-color: #0059c1;
-  }
-  .projectList {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1rem;
-  }
-  
-  .projectCard {
-    background-color: #fff;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 1rem;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  
-  .projectCard:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-  }
-  
-  .projectTitle {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: #1f2937;
-  }
-  
-  .projectDescription {
-    color: #4b5563;
-    font-size: 0.95rem;
-    margin-bottom: 0.75rem;
-  }
-  
-  .projectMeta p {
-    margin: 0.25rem 0;
-    font-size: 0.875rem;
-    color: #374151;
-  }
-  
-  .projectActions {
-    margin-top: 1rem;
-    display: flex;
-    justify-content: space-between;
-    gap: 0.5rem;
-  }
-  
-  .projectEditButton,
-  .projectDeleteButton {
-    flex: 1;
-    padding: 0.5rem 0.75rem;
-    font-size: 0.875rem;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-  
-  .projectEditButton {
-    background-color: #3b82f6;
-    color: white;
-  }
-  
-  .projectEditButton:hover {
-    background-color: #2563eb;
-  }
-  
-  .projectDeleteButton {
-    background-color: #ef4444;
-    color: white;
-  }
-  
-  .projectDeleteButton:hover {
-    background-color: #dc2626;
-  }
-  
-  
-  
+.projectFormSection {
+  flex: 1;
+  width: 500px;
+  margin: 0 auto;
+}
+
+.projectHeading {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.projectForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.projectInput,
+.projectTextarea,
+.projectSelect {
+  padding: 0.6rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.projectButton {
+  background-color: #0070f3;
+  color: white;
+  padding: 0.7rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.projectButton:hover {
+  background-color: #005ad1;
+}
+
+.projectListContainer {
+  padding: 1rem;
+}
+
+.projectListHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.createButton {
+  padding: 0.5rem 1rem;
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 0.4rem;
+  cursor: pointer;
+}
+
+.createButton:hover {
+  background-color: #0059c1;
+}
+
+.projectList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.projectCard {
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.projectCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.projectTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #1f2937;
+}
+
+.projectDescription {
+  color: #4b5563;
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+}
+
+.projectMeta p {
+  margin: 0.25rem 0;
+  font-size: 0.875rem;
+  color: #374151;
+}
+
+.projectActions {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.projectEditButton,
+.projectDeleteButton {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.projectEditButton {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.projectEditButton:hover {
+  background-color: #2563eb;
+}
+
+.projectDeleteButton {
+  background-color: #ef4444;
+  color: white;
+}
+
+.projectDeleteButton:hover {
+  background-color: #dc2626;
+}

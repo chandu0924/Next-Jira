@@ -22,7 +22,7 @@
     background: none;
     border: none;
     color: #a3c4f3;
-    font-weight: bold;
+    /* font-weight: bold; */
     font-size: 1rem;
     cursor: pointer;
   }
