@@ -13,9 +13,9 @@ export default function LeftSidebar() {
       <nav>
         <ul className={styles.menu}>
           <li>
-            <button onClick={() => setBacklogOpen(!backlogOpen)} className={styles.menuButton}>
+            <span onClick={() => setBacklogOpen(!backlogOpen)} className={styles.menuButton}>
               Backlog ▾
-            </button>
+            </span>
             {backlogOpen && (
               <ul className={styles.submenu}>
                 <li><Link href="/backlog/epic">Epic</Link></li>
@@ -28,9 +28,9 @@ export default function LeftSidebar() {
           <li><Link href="/main/sprints">Sprints</Link></li>
           <li><Link href="/tasks">Current Tasks</Link></li>
           {/* <li><Link href="/resources">Resources</Link></li> */}
-          <button onClick={() => setResourcesOpen(!resourcesOpen)} className={styles.menuButton}>
+          <span onClick={() => setResourcesOpen(!resourcesOpen)} className={styles.menuButton}>
             Resources ▾
-          </button>
+          </span>
           {resourcesOpen && 
             <ul className={styles.submenu}>
               <li><Link href="/main/project">Projects</Link></li>

@@ -1,23 +1,63 @@
 "use client"
 
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd"
-import { useState } from "react"
-
-const initialData = {
-  todo: [
-    { id: "task-1", content: "Design UI" },
-    { id: "task-2", content: "Setup DB Schema" },
-  ],
-  inprogress: [
-    { id: "task-3", content: "Write APIs" }
-  ],
-  completed: [
-    { id: "task-4", content: "Project Setup" }
-  ]
-}
+import { useEffect, useState } from "react"
+import axios from "axios"
+import styles from "./sprint.module.css"
 
 export default function SprintsPage() {
-  const [tasks, setTasks] = useState(initialData)
+  const [tasks, setTasks] = useState({
+    todo: [],
+    inprogress: [],
+    completed: []
+  })
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/projects`)
+        const projects = res.data
+
+        const groupedTasks = {
+          todo: [],
+          inprogress: [],
+          completed: []
+        }
+
+        projects.forEach((proj) => {
+          // const task = {
+          //   id: proj._id,
+          //   content: proj.title
+          // }
+          const task = {
+            id: proj._id,
+            title: proj.title,
+            description: proj.description,
+            status: proj.status,
+            priority: proj.priority,
+            assignee: proj.assignee,
+            assignedBy: proj.assignedBy
+          }
+
+          const status = proj.status.toLowerCase()
+
+          if (status === "to do" || status === "todo") {
+            groupedTasks.todo.push(task)
+          } else if (status === "in progress" || status === "inprogress") {
+            groupedTasks.inprogress.push(task)
+          } else if (status === "completed") {
+            groupedTasks.completed.push(task)
+          }
+        })
+
+        setTasks(groupedTasks)
+      } catch (err) {
+        console.error("Failed to fetch projects:", err)
+      }
+    }
+
+    fetchTasks()
+  }, [])
 
   const onDragEnd = (result: any) => {
     const { source, destination } = result
@@ -49,19 +89,13 @@ export default function SprintsPage() {
         [destination.droppableId]: destCol
       }))
     }
-  }
 
-  const columnStyle = {
-    flex: 1,
-    margin: "0 10px",
-    background: "#f5f5f5",
-    borderRadius: "8px",
-    padding: "10px",
-    minHeight: "400px"
+    // Optional: Update status in DB via PUT request
+    // axios.put(`/api/projects/${movedTask.id}`, { status: destination.droppableId })
   }
 
   return (
-    <div style={{ display: "flex", gap: "20px" }}>
+    <div className={styles.container}>
       <DragDropContext onDragEnd={onDragEnd}>
         {["todo", "inprogress", "completed"].map((colId) => (
           <Droppable droppableId={colId} key={colId}>
@@ -69,9 +103,11 @@ export default function SprintsPage() {
               <div
                 ref={provided.innerRef}
                 {...provided.droppableProps}
-                style={columnStyle}
+                className={styles.column}
               >
-                <h2 style={{ textTransform: "capitalize" }}>{colId.replace("inprogress", "In Progress")}</h2>
+                <h2 className={styles.columnTitle}>
+                  {colId === "inprogress" ? "In Progress" : colId.charAt(0).toUpperCase() + colId.slice(1)}
+                </h2>
                 {tasks[colId].map((task, index) => (
                   <Draggable draggableId={task.id} index={index} key={task.id}>
                     {(provided, snapshot) => (
@@ -79,17 +115,17 @@ export default function SprintsPage() {
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-                        style={{
-                          userSelect: "none",
-                          padding: 16,
-                          marginBottom: 8,
-                          backgroundColor: snapshot.isDragging ? "#b3cde0" : "#fff",
-                          borderRadius: "6px",
-                          boxShadow: snapshot.isDragging ? "0 2px 6px rgba(0,0,0,0.2)" : "none",
-                          ...provided.draggableProps.style
-                        }}
+                        className={`${styles.taskCard} ${snapshot.isDragging ? styles.taskCardDragging : ""}`}
                       >
-                        {task.content}
+                        {/* {task.content} */}
+                        <div className={styles.taskHeader}><strong>{task.title}</strong></div>
+                        <div className={styles.taskInfo}><em>{task.description}</em></div>
+                        <div className={styles.taskMeta}>
+                          <p>Status: {task.status}</p>
+                          <p>Priority: {task.priority}</p>
+                          <p>Assignee: {task.assignee}</p>
+                          <p>Assigned By: {task.assignedBy}</p>
+                        </div>
                       </div>
                     )}
                   </Draggable>
