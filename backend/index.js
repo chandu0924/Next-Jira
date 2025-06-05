@@ -15,7 +15,7 @@ const app = express();
 // };
 const corsOptions = {
   // origin: 'http://localhost:3000',
-  methods: ["GET", "POST", "PATCH", "DELETE"],
+  methods: ["GET", "POST", "PATCH", "DELETE", "PUT"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 app.use(cors(corsOptions));

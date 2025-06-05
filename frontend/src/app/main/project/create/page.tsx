@@ -14,11 +14,11 @@ export default function CreateProjectPage() {
     title: "",
     description: "",
     completionDate: "",
-    assignedDays: "",
+    assignedDays: 0,
     assignee: "",
     assignedBy: "",
-    priority: "Medium",
-    status: "Not Started",
+    priority: "",
+    status: "",
     tags: "",
   });
 
@@ -37,11 +37,11 @@ export default function CreateProjectPage() {
           completionDate: proj.completionDate
             ? proj.completionDate.slice(0, 10)
             : "",
-          assignedDays: proj.assignedDays || "",
+          assignedDays: proj.assignedDays || 0,
           assignee: proj.assignee || "",
           assignedBy: proj.assignedBy || "",
-          priority: proj.priority || "Medium",
-          status: proj.status || "Not Started",
+          priority: proj.priority || "Low",
+          status: proj.status || "ToDo",
           tags: (proj.tags || []).join(", "),
         });
       } catch (err) {
@@ -66,6 +66,10 @@ export default function CreateProjectPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // const project = {
+    //   ...formData,
+    //   tags: formData.tags.split(",").map((tag) => tag.trim()),
+    // };
     const project = {
       ...formData,
       tags: formData.tags.split(",").map((tag) => tag.trim()),
@@ -73,11 +77,14 @@ export default function CreateProjectPage() {
 
     try {
       if (projectId) {
+        console.log("project exist");
+
         await axios.put(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/projects/${projectId}`,
           project
         );
       } else {
+        console.log("project new");
         await axios.post(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/projects`,
           project
@@ -148,23 +155,28 @@ export default function CreateProjectPage() {
           value={formData.priority}
           onChange={handleChange}
           className={styles.projectSelect}
+          required
         >
-          <option>Low</option>
-          <option>Medium</option>
-          <option>High</option>
-          <option>Critical</option>
+          <option value="" disabled>Select priority</option>
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+          <option value="Critical">Critical</option>
         </select>
+
         <select
           name="status"
           value={formData.status}
           onChange={handleChange}
           className={styles.projectSelect}
+          required
         >
-          {/* <option>Not Started</option> */}
-          <option>ToDo</option>
-          <option>In Progress</option>
-          <option>Completed</option>
+          <option value="" disabled>Select status</option>
+          <option value="ToDo">ToDo</option>
+          <option value="InProgress">InProgress</option>
+          <option value="Completed">Completed</option>
         </select>
+
         <input
           name="tags"
           placeholder="Tags (comma-separated)"

@@ -44,6 +44,31 @@ router.put("/:id", async (req, res) => {
   }
 })
 
+// Update only the status of a project
+router.patch("/:id/status", async (req, res) => {
+  try {
+    const { status } = req.body;
+
+    if (!status) {
+      return res.status(400).json({ error: "Status is required" });
+    }
+
+    const updatedProject = await Project.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      { new: true }
+    );
+
+    if (!updatedProject) {
+      return res.status(404).json({ error: "Project not found" });
+    }
+
+    res.json(updatedProject);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
 // Delete project
 router.delete("/:id", async (req, res) => {
   try {

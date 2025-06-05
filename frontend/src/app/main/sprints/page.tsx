@@ -7,9 +7,9 @@ import styles from "./sprint.module.css"
 
 export default function SprintsPage() {
   const [tasks, setTasks] = useState({
-    todo: [],
-    inprogress: [],
-    completed: []
+    ToDo: [],
+    InProgress: [],
+    Completed: []
   })
 
   useEffect(() => {
@@ -19,9 +19,9 @@ export default function SprintsPage() {
         const projects = res.data
 
         const groupedTasks = {
-          todo: [],
-          inprogress: [],
-          completed: []
+          ToDo: [],
+          InProgress: [],
+          Completed: []
         }
 
         projects.forEach((proj) => {
@@ -39,15 +39,16 @@ export default function SprintsPage() {
             assignedBy: proj.assignedBy
           }
 
-          const status = proj.status.toLowerCase()
+          // const status = proj.status.toLowerCase()
 
-          if (status === "to do" || status === "todo") {
-            groupedTasks.todo.push(task)
-          } else if (status === "in progress" || status === "inprogress") {
-            groupedTasks.inprogress.push(task)
-          } else if (status === "completed") {
-            groupedTasks.completed.push(task)
+          if (proj.status === "ToDo") {
+            groupedTasks.ToDo.push(task)
+          } else if (proj.status === "InProgress") {
+            groupedTasks.InProgress.push(task)
+          } else if (proj.status === "Completed") {
+            groupedTasks.Completed.push(task)
           }
+          
         })
 
         setTasks(groupedTasks)
@@ -59,45 +60,57 @@ export default function SprintsPage() {
     fetchTasks()
   }, [])
 
-  const onDragEnd = (result: any) => {
-    const { source, destination } = result
-
-    if (!destination) return
-
+  const onDragEnd = async (result: any) => {
+    const { source, destination } = result;
+  
+    if (!destination) return;
+  
     if (
       source.droppableId === destination.droppableId &&
       source.index === destination.index
     ) {
-      return
+      return;
     }
-
-    const sourceCol = [...tasks[source.droppableId]]
-    const destCol = [...tasks[destination.droppableId]]
-    const [movedTask] = sourceCol.splice(source.index, 1)
-
+  
+    const sourceCol = [...tasks[source.droppableId]];
+    const destCol = [...tasks[destination.droppableId]];
+    const [movedTask] = sourceCol.splice(source.index, 1);
+  
+    // Update frontend state
     if (source.droppableId === destination.droppableId) {
-      sourceCol.splice(destination.index, 0, movedTask)
-      setTasks(prev => ({
-        ...prev,
-        [source.droppableId]: sourceCol
-      }))
-    } else {
-      destCol.splice(destination.index, 0, movedTask)
-      setTasks(prev => ({
+      sourceCol.splice(destination.index, 0, movedTask);
+      setTasks((prev) => ({
         ...prev,
         [source.droppableId]: sourceCol,
-        [destination.droppableId]: destCol
-      }))
+      }));
+    } else {
+      // Update task status before setting state
+      const updatedTask = { ...movedTask, status: destination.droppableId };
+      destCol.splice(destination.index, 0, updatedTask);
+      setTasks((prev) => ({
+        ...prev,
+        [source.droppableId]: sourceCol,
+        [destination.droppableId]: destCol,
+      }));
+  
+      // ✅ Make PATCH request to update status in backend
+      try {
+        await axios.patch(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/projects/${movedTask.id}/status`,
+          {
+            status: destination.droppableId
+          }
+        );
+      } catch (err) {
+        console.error("Failed to update project status:", err);
+      }
     }
-
-    // Optional: Update status in DB via PUT request
-    // axios.put(`/api/projects/${movedTask.id}`, { status: destination.droppableId })
-  }
-
+  };
+  
   return (
     <div className={styles.container}>
       <DragDropContext onDragEnd={onDragEnd}>
-        {["todo", "inprogress", "completed"].map((colId) => (
+        {["ToDo", "InProgress", "Completed"].map((colId) => (
           <Droppable droppableId={colId} key={colId}>
             {(provided) => (
               <div
@@ -106,7 +119,7 @@ export default function SprintsPage() {
                 className={styles.column}
               >
                 <h2 className={styles.columnTitle}>
-                  {colId === "inprogress" ? "In Progress" : colId.charAt(0).toUpperCase() + colId.slice(1)}
+                  {colId}
                 </h2>
                 {tasks[colId].map((task, index) => (
                   <Draggable draggableId={task.id} index={index} key={task.id}>
